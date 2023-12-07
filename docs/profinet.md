@@ -1,7 +1,7 @@
 # Profinet
 Profinet Protocol Threat Emulation Tooling
 
-v1.0 released 8 Dec 2023
+v1.0 released 8 Dec 2023 <br>
 Mapped to ATT&CK for ICS [v14](https://attack.mitre.org/resources/updates/updates-october-2023/)
 
 ## Overview
