@@ -1,0 +1,29 @@
+---
+
+- id: 36284e7a-012f-4d9d-b803-0d435e06bbf6
+  name: Profinet DCP Get-IP
+  description: |
+    Profinet DCP 
+    (Service ID: 0x03=Get, Service Type: 0x00=Request, Option: 0x01=IP, Suboption: 0x02=IP parameter)
+
+    Requests the IP address of a target device specified by MAC address using Profinet DCP.    
+  tactic: discovery
+  technique:
+    attack_id: T0888
+    name: 'Remote System Information Discovery'
+  repeatable: True
+  platforms:
+    linux:
+      sh:
+        timeout: 360
+        command: |
+          ./dcp_utility get_ip #{dcp.target.mac}
+        payloads:
+        - dcp_utility
+    windows:
+      psh, cmd:
+        timeout: 360
+        command: |
+          .\dcp_utility.exe get_ip #{dcp.target.mac}
+        payloads:
+        - dcp_utility.exe

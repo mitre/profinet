@@ -1,0 +1,17 @@
+---
+
+id: 76d3f1c5-61c1-4df6-9829-6390e7f661ee
+name: Profinet Sample Facts
+facts:
+- trait: dcp.target.mac
+  value: aa:bb:cc:dd:ee:ff
+- trait: dcp.target.ip
+  value: 192.168.0.1
+- trait: dcp.target.subnetmask
+  value: 0.0.0.255
+- trait: dcp.target.gateway
+  value: 192.168.0.100
+- trait: dcp.target.name
+  value: stationalpha
+relationships: []
+rules: []

@@ -1,0 +1,29 @@
+---
+
+- id: b885e6f4-18c2-455b-9695-6eec76d545ca
+  name: Profinet DCP Signal
+  description: |
+    Profinet DCP 
+    (Service ID: 0x04=Set, Service Type: 0x00=Request, Option: 0x05=Control, Suboption: 0x03=Signal)
+    
+    Request target device specified by MAC address to flash its LEDs for local identification.     
+  tactic: impair-process-control
+  technique:
+    attack_id: T0855
+    name: 'Unauthorized Command Message'
+  repeatable: True
+  platforms:
+    linux:
+      sh:
+        timeout: 360
+        command: |
+          ./dcp_utility blink #{dcp.target.mac}
+        payloads:
+        - dcp_utility
+    windows:
+      psh, cmd:
+        timeout: 360
+        command: |
+          .\dcp_utility.exe blink #{dcp.target.mac}
+        payloads:
+        - dcp_utility.exe

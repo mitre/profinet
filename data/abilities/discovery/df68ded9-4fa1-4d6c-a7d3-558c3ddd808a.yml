@@ -1,0 +1,29 @@
+---
+
+- id: df68ded9-4fa1-4d6c-a7d3-558c3ddd808a
+  name: Profinet DCP Identify All
+  description: |
+    Profinet DCP 
+    (Service ID: 0x05=Identify, Service Type: 0x00=Request, Option: 0xFF=ALL, Suboption: 0xFF=ALL)
+
+    Broadcasts a Profinet DCP Identify All request to discover devices on the local subnet.   
+  tactic: discovery
+  technique:
+    attack_id: T0846
+    name: 'Remote System Discovery'
+  repeatable: True
+  platforms:
+    linux:
+      sh:
+        timeout: 360
+        command: |
+          ./dcp_utility id_all
+        payloads:
+        - dcp_utility
+    windows:
+      psh, cmd:
+        timeout: 360
+        command: |
+          .\dcp_utility.exe id_all
+        payloads:
+        - dcp_utility.exe

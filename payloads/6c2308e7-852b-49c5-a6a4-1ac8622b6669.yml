@@ -1,0 +1,11 @@
+---
+
+id: 6c2308e7-852b-49c5-a6a4-1ac8622b6669
+name: Profinet Payloads
+standard_payloads:
+  dcp_utility:
+    description: DCP Utility (Linux)
+    id: be472e7e-bdb8-4ccc-9481-c15ef5cbd363
+  dcp_utility.exe:
+    description: DCP Utility (Windows)
+    id: 77ec6492-4670-4508-af56-af660028c3ae

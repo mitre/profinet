@@ -1,0 +1,29 @@
+---
+
+- id: 23b5c9f5-3a52-4b01-81bd-6f3fa570d57e
+  name: Profinet DCP Set-Name
+  description: |
+    Profinet DCP 
+    (Service ID: 0x04=Set, Service Type: 0x00=Request, Option: 0x02=Device properties, Suboption: 0x02=Station name)
+
+    Sets the name of a target device specified by MAC address.   
+  tactic: impair-process-control
+  technique:
+    attack_id: T0855
+    name: 'Unauthorized Command Message'
+  repeatable: True
+  platforms:
+    linux:
+      sh:
+        timeout: 360
+        command: |
+          ./dcp_utility set_name #{dcp.target.mac} #{dcp.target.name} 
+        payloads:
+        - dcp_utility
+    windows:
+      psh, cmd:
+        timeout: 360
+        command: |
+          .\dcp_utility.exe set_name #{dcp.target.mac} #{dcp.target.name} 
+        payloads:
+        - dcp_utility.exe

@@ -1,0 +1,29 @@
+---
+
+- id: 35e384c3-2c27-4cf6-8155-70b2cf4b6cef
+  name: Profinet DCP Get-Name
+  description: |
+    Profinet DCP 
+    (Service ID: 0x03=Get, Service Type: 0x00=Request, Option: 0x02=Device properties, Suboption: 0x02=Station name)
+
+    Requests the name of a target device specified by MAC address using Profinet DCP.   
+  tactic: discovery
+  technique:
+    attack_id: T0888
+    name: 'Remote System Information Discovery'
+  repeatable: True
+  platforms:
+    linux:
+      sh:
+        timeout: 360
+        command: |
+          ./dcp_utility get_name #{dcp.target.mac}
+        payloads:
+        - dcp_utility
+    windows:
+      psh, cmd:
+        timeout: 360
+        command: |
+          .\dcp_utility.exe get_name #{dcp.target.mac}
+        payloads:
+        - dcp_utility.exe

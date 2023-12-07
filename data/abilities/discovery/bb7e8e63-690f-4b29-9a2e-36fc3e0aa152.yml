@@ -1,0 +1,29 @@
+---
+
+- id: bb7e8e63-690f-4b29-9a2e-36fc3e0aa152
+  name: Profinet DCP Identify
+  description: |
+    Profinet DCP 
+    (Service ID: 0x05=Identify, Service Type: 0x00=Request, Option: 0xFF=ALL, Suboption: 0xFF=ALL)
+
+    Sends a Profinet DCP Identify request to a target device specified by MAC address to retrieve additional device information.   
+  tactic: discovery
+  technique:
+    attack_id: T0846
+    name: 'Remote System Discovery'
+  repeatable: True
+  platforms:
+    linux:
+      sh:
+        timeout: 360
+        command: |
+          ./dcp_utility id_one #{dcp.target.mac}
+        payloads:
+        - dcp_utility
+    windows:
+      psh, cmd:
+        timeout: 360
+        command: |
+          .\dcp_utility.exe id_one #{dcp.target.mac}
+        payloads:
+        - dcp_utility.exe
