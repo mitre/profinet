@@ -1,6 +1,5 @@
 from app.utility.base_world import BaseWorld
-from plugins.profinet.app.profinet_gui import ProfinetGUI
-from plugins.profinet.app.profinet_api import ProfinetAPI
+from plugins.profinet.app.profinet_svc import ProfinetService
 
 name = 'Profinet'
 description = 'The Profinet plugin for Caldera provides adversary emulation abilities specific to the Profinet protocol.'
@@ -9,11 +8,7 @@ access = BaseWorld.Access.RED
 
 
 async def enable(services):
+    profinet_svc = ProfinetService(services, name, description)
     app = services.get('app_svc').application
-    profinet_gui = ProfinetGUI(services, name=name, description=description)
-    app.router.add_static('/profinet', 'plugins/profinet/static/', append_version=True)
-    app.router.add_route('GET', '/plugin/profinet/gui', profinet_gui.splash)
-
-    profinet_api = ProfinetAPI(services)
-    # Add API routes here
-    app.router.add_route('POST', '/plugin/profinet/mirror', profinet_api.mirror)
+    app.router.add_route('GET', '/plugin/profinet/gui', profinet_svc.splash)
+    app.router.add_route('GET', '/plugin/profinet/data', profinet_svc.plugin_data)
