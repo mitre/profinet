@@ -256,7 +256,7 @@ __Additional Command Line Options:__
 - `--timeout`:&nbsp; how long to wait for response messages in seconds (optional, default: 10s)
 
 ### Source Code
-The source code for the Profinet plugin can be found inside this plugin's [src directory](/src/).
+The source code for the Profinet plugin can be found inside this plugin's `src/` directory.
 
 ### Copyright Notice
 Profinet® is a registered trademark of PROFIBUS Nutzerorganisation, Haid-und-Neu-Straße 7 76131 Karlsruhe FED REP GERMANY.
