@@ -1,0 +1,74 @@
+name: Build Payloads
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, windows-2022]
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.8"
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          git clone --depth 1 --branch v1.1.6 https://gitlab.com/pyshacks/pnio_dcp.git ../pnio_dcp
+          cp src/pnio_dcp.py ../pnio_dcp/pnio_dcp/pnio_dcp.py
+          pip install ../pnio_dcp pyinstaller==6.10.0
+
+      # Build from a folder without src/pnio_dcp.py, so the installed package is used.
+      - name: Build with PyInstaller
+        shell: bash
+        run: |
+          mkdir ../app
+          cp src/dcp_utility.py ../app/
+          pyinstaller -F ../app/dcp_utility.py --distpath dist
+
+      - name: Upload payload
+        uses: actions/upload-artifact@v4
+        with:
+          name: payload-${{ runner.os }}
+          path: dist/
+          retention-days: 1
+
+  create-pr:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Download payloads
+        uses: actions/download-artifact@v4
+        with:
+          pattern: payload-*
+          merge-multiple: true
+          path: payloads/
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          base: main
+          branch: ci/update-payloads
+          title: Update payloads
+          commit-message: 'chore: update payloads'
+          body: Automated update of payloads.
+          add-paths: payloads
+          delete-branch: true
